@@ -1,38 +1,120 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ihre Domain bei streik.jetzt</title>
     <link rel="stylesheet" href="style.min.css">
+    <script src="/jquery-3.7.0.min.js"></script>
 </head>
+
 <body>
     <main>
         <h1>
             Willkommen bei streik.jetzt
         </h1>
-        <p>Sie haben Interesse an einer kostenlosen Subdomain im Format: <span class="code monospace bg-dark"><span class="italic">IhrName</span>.streik.jetzt</span>?</p>
-        <p>Aktuell wird an einer einfachen und semi-automatisierten Registrierung gearbeitet. Bis dahin muss die Vergabe und Freischaltung leider manuell Erfolgen.</p>
-        <p>Schreiben Sie dazu bitte eine Mail an: <span class="blockspam" aria-hidden="true"></span><a id="obfuscate-mail" href="">registrierung<span class="blockspam" aria-hidden="true"></span>@<!-- asdljfhaksjdhfasdfasdkjfhaksjdfasdf --><span class="blockspam" aria-hidden="true"></span>streik<span class="blockspam" aria-hidden="true"></span>.<span class="blockspam" aria-hidden="true"></span>jetzt</a>, in der die Folgenden Angaben vorhanden sind:</p>
-        <ul>
-            <li>Ihr Name</li>
-            <li>Firma/Organisation</li>
-            <li>Ladungsfähige Postadresse in Deutschland, Österreich, Schweiz &amp; BeNeLux-Staaten</li>
-            <li>Telefonnummer aus Deutschland, Österreich, Schweiz &amp; BeNeLux-Staaten</li>
-            <li>Faxnummer (falls vorhanden)</li>
-            <li>E-Mail-Adresse</li>
-            <li>gewünschte Subdomain</li>
-            <li>IP-Adresse(n) Ihres Webservers (und weitere Angaben zur Einstellung der DNS-Angaben)</li>
-            <li>Grund für die Registrierung (kurz, ein Satz)</li>
-            <li>Erläuterung wofür Sie die Subdomain verwenden möchten</li>
-        </ul>
-        <p>Leider sehr viele Angaben, ich möchte mich aber rechtlich absichern können und aus diesem Grund stichprobenartig Content-Kontrollen durchführen.</p>
+        <p>Sie haben Interesse an einer kostenlosen Subdomain im Format: <span class="code monospace bg-dark"><span
+                    class="italic">IhrName</span>.streik.jetzt</span>?</p>
+        <form id="registeringform" action="/" method="post">
+            <div class="formgroup" id="fullnamegroup">
+                <label for="fullname">Vor- & Zuname:</label>
+                <input type="text" name="fullname" id="fullname" required>
+            </div>
+
+            <div class="formgroup" id="orgnamegroup">
+                <label for="orgname">Firma/Organisation:</label>
+                <input type="text" name="orgname" id="orgname" required>
+            </div>
+
+            <div class="formgroup" id="poststreetgroup">
+                <label for="poststreet">Straße:</label>
+                <input type="text" name="poststreet" id="poststreet" required>
+            </div>
+
+            <div class="formgroup" id="postzipcodegroup">
+                <label for="postzipcode">Postleitzahl:</label>
+                <input type="text" name="postzipcode" id="postzipcode" required>
+            </div>
+
+            <div class="formgroup" id="postcitygroup">
+                <label for="postcity">Stadt:</label>
+                <input type="text" name="postcity" id="postcity" required>
+            </div>
+
+            <div class="formgroup" id="postcountrygroup">
+                <label for="postcountry">Land:</label>
+                <select name="postcountry" id="postcountry" required>
+                    <option value="none" disabled selected>---Bitte wählen---</option>
+                    <option value="ger">Deutschland</option>
+                    <option value="at">Österreich</option>
+                    <option value="ch">Schweiz</option>
+                    <option value="be">Belgien</option>
+                    <option value="lux">Luxemburg</option>
+                </select>
+            </div>
+
+            <div class="formgroup" id="contactemailgroup">
+                <label for="contactemail">E-Mail:</label>
+                <input type="email" name="contactemail" id="contactemail" required>
+            </div>
+
+            <div class="formgroup" id="contactphonegroup">
+                <label for="contactphone">Telefon:</label>
+                <input type="tel" name="contactphone" id="contactphone" required>
+            </div>
+
+            <div class="formgroup" id="contactfaxgroup">
+                <label for="contactfax">Fax:</label>
+                <input type="tel" name="contactfax" id="contactfax">
+            </div>
+
+            <div class="formgroup" id="chosensubdomaingroup">
+                <label for="chosensubdomain">Gewünschte Subdomain:</label>
+                <input type="text" name="chosensubdomain" id="chosensubdomain" required>
+            </div>
+
+            <div class="formgroup" id="registeringreasongroup">
+                <label for="registeringreason">Wofür möchten Sie die Subdomain nutzen?</label>
+                <textarea name="registeringreason" id="registeringreason" cols="30" rows="10" required></textarea>
+            </div>
+
+            <div class="formgroup" id="configinfogroup">
+                <label for="configinfo">IP-Adressen und weitere Infos zum Konfigurieren der DNS-Einstellungen:</label>
+                <textarea name="configinfo" id="configinfo" cols="30" rows="10" required></textarea>
+            </div>
+
+            <div class="formgroup" id="contactviapgpgroup">
+                <div id="contactviapgptruegroup">
+                    <input type="radio" name="contactviapgp" value="true" id="contactactviapgptrue">
+                    <label for="contactviapgptrue">Ich will PGP</label>
+                </div>
+                <div id="contactviapgpfalsegroup">
+                    <input type="radio" name="contactviapgp" value="false" id="contactactviapgpfalse">
+                    <label for="contactviapgpfalse">Kein PGP</label>
+                </div>
+            </div>
+
+            <div class="formgroup" id="contactpgppublickeygroup">
+                <label for="contactpgppublickey">Ihr PGP-Public-Key</label>
+                <textarea name="contactpgppublickey" id="contactpgppublickey" cols="30" rows="10"></textarea>
+            </div>
+
+            <div class="formgroup" id="formbuttongroup">
+                <button id="submitbutton" type="submit">Abschicken</button>
+            </div>
+
+        </form>
+        <p>Leider sehr viele Angaben, ich möchte mich aber rechtlich absichern können und aus diesem Grund
+            stichprobenartig Content-Kontrollen durchführen.</p>
         <p>Die Möglichkeit per sicherer PGP-Mail Kontakt aufzunehmen ist in Arbeit.</p>
-    </main>    
+    </main>
     <footer>
         <a href="/impressum/">Impressum</a>
     </footer>
-    <script src="/site.js"></script>
+    <!-- <script src="/site.js"></script> -->
+    <script src="/contactform.js"></script>
 </body>
+
 </html>
