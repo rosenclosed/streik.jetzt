@@ -111,5 +111,24 @@ $(submitButton).on("click", (e) => {
     e.preventDefault();
     verifyInputs();
     console.log(isFormValid);
+    if (isFormValid) {
+        var formData = {};
+        formData.fullname = fullName;
+        formData.organzationName = orgName;
+        formData.street = postStreet;
+        formData.zipcode = postZip;
+        formData.city = postCity;
+        formData.country = postCountry;
+        formData.contactemail = contactEmail;
+        formData.contactphone = contactPhone;
+        if (contactFax != "") {
+            formData.contactfax = contactFax;
+        } else {
+            formData.contactfax = "undefined";
+        }
+        formData.subdomain = chosenSubdomain;
+        formData.reason = registerReason;
+        formData.configinfo = configInfo;
+    }
 });
 
