@@ -21,7 +21,6 @@ $subdomain = $_POST['subdomain'];
 $reason = $_POST['reason'];
 $configInfo = $_POST['configInfo'];
 
-
 // Compose the email
 $to = 'registrierung@streik.jetzt';
 $subject = 'New Contact Form Submission';
@@ -32,7 +31,6 @@ $smtpHost = '';
 $smtpPort = 465;
 $smtpUsername = '';
 $smtpPassword = '';
-
 try {
     // Create a new PHPMailer instance
     $mail = new PHPMailer;
@@ -46,12 +44,15 @@ try {
     $mail->Username = $smtpUsername;
     $mail->Password = $smtpPassword;
 
-    // Set up email content
+    // Set up email content and encoding
     $mail->setFrom($contactEmail, $fullName);
     $mail->addAddress($to);
     $mail->Subject = $subject;
     $mail->Body = $body;
     $mail->addReplyTo($contactEmail, $fullName);
+
+    // Set the character encoding
+    $mail->CharSet = 'UTF-8';
 
     // Send the email
     if ($mail->send()) {
