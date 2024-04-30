@@ -1,134 +1,102 @@
 const registerForm = $("#registeringform");
 
-const fullNameInput = $("#fullname");
-const orgNameInput = $("#orgname");
-const postStreetInput = $("#poststreet");
-const postZipInput = $("#postzipcode");
-const postCityInput = $("#postcity");
-const postCountryInput = $("#postcountry");
-const contactEmailInput = $("#contactemail");
-const contactPhoneInput = $("#contactphone");
-const contactFaxInput = $("#contactfax");
-const chosenSubdomainInput = $("#chosensubdomain");
-const registerReasonInput = $("#registeringreason");
-const configInfoInput = $("#configinfo");
-const contactSecurelyTrue = $("#contactactviapgptrue");
-const contactSecurelyFalse = $("#contactactviapgpfalse");
-const pgpPublicKeyInput = $("#contactpgppublickey");
-const submitButton = $("#submitbutton");
-
-const fullNameInputGroup = $("#fullnamegroup");
-const orgNameInputGroup = $("#orgnamegroup");
-const postStreetInputGroup = $("#poststreetgroup");
-const postZipInputGroup = $("#postzipcodegroup");
-const postCityInputGroup = $("#postcitygroup");
-const postCountryInputGroup = $("#postcountrygroup");
-const contactEmailInputGroup = $("#contactemailgroup");
-const contactPhoneInputGroup = $("#contactphonegroup");
-const contactFaxInputGroup = $("#contactfaxgroup");
-const chosenSubdomainInputGroup = $("#chosensubdomaingroup");
-const registerReasonInputGroup = $("#registeringreasongroup");
-const configInfoInputGroup = $("#configinfogroup");
-const contactSecurelyInputGroup = $("#contactviapgpgroup");
-const pgpPublicKeyInputGroup = $("#contactpgppublickeygroup");
-const submitButtonGroup = $("#formbuttongroup");
-
-const getValue = (element) => {
-    let result = eval("$(" + element + ").val();");
-    return result;
-}
-
-let fullName = getValue("fullNameInput");
-let orgName = getValue("orgNameInput");
-let postStreet = getValue("postStreetInput");
-let postZip = getValue("postZipInput");
-let postCity = getValue("postCityInput");
-let postCountry = getValue("postCountryInput");
-let contactEmail = getValue("contactEmailInput");
-let contactPhone = getValue("contactPhoneInput");
-let contactFax = getValue("contactFaxInput");
-let chosenSubdomain = getValue("chosenSubdomainInput");
-let registerReason = getValue("registerReasonInput");
-let configInfo = getValue("configInfoInput");
-let contactSecurely = false;
-let pgpPublicKey = getValue("pgpPublicKeyInput");
-
-let isFormValid = true;
-
-const isSecureContactTrue = () => {
-    if ($(contactSecurelyTrue).is(":checked") == true && $(contactSecurelyFalse).is(":checked") == false) {
-        contactSecurely = true;
-    } else {
-        if ($(contactSecurelyTrue).is(":checked") == false && $(contactSecurelyFalse).is(":checked") == true) {
-            contactSecurely = false;
-        }
-    }
+const inputs = {
+    fullName: $("#fullname"),
+    orgName: $("#orgname"),
+    postStreet: $("#poststreet"),
+    postZip: $("#postzipcode"),
+    postCity: $("#postcity"),
+    postCountry: $("#postcountry"),
+    contactEmail: $("#contactemail"),
+    contactPhone: $("#contactphone"),
+    contactFax: $("#contactfax"),
+    chosenSubdomain: $("#chosensubdomain"),
+    registerReason: $("#registeringreason"),
+    configInfo: $("#configinfo"),
+    // contactSecurelyTrue: $("#contactactviapgptrue"), // Commented out
+    // contactSecurelyFalse: $("#contactactviapgpfalse"), // Commented out
+    pgpPublicKey: $("#contactpgppublickey"), // Commented out
+    submitButton: $("#submitbutton"),
 };
 
+const groups = {
+    fullName: $("#fullnamegroup"),
+    orgName: $("#orgnamegroup"),
+    postStreet: $("#poststreetgroup"),
+    postZip: $("#postzipcodegroup"),
+    postCity: $("#postcitygroup"),
+    postCountry: $("#postcountrygroup"),
+    contactEmail: $("#contactemailgroup"),
+    contactPhone: $("#contactphonegroup"),
+    contactFax: $("#contactfaxgroup"),
+    chosenSubdomain: $("#chosensubdomaingroup"),
+    registerReason: $("#registeringreasongroup"),
+    configInfo: $("#configinfogroup"),
+    // contactSecurely: $("#contactviapgpgroup"), // Commented out
+    pgpPublicKey: $("#contactpgppublickeygroup"), // Commented out
+    submitButton: $("#formbuttongroup"),
+};
+
+const getValue = (element) => $(element).val();
+
+// const isSecureContactTrue = () => inputs.contactSecurelyTrue.is(":checked") && !inputs.contactSecurelyFalse.is(":checked"); // Commented out
+
 const getValues = () => {
-    fullName = getValue("fullNameInput");
-    orgName = getValue("orgNameInput");
-    postStreet = getValue("postStreetInput");
-    postZip = getValue("postZipInput");
-    postCity = getValue("postCityInput");
-    postCountry = getValue("postCountryInput");
-    contactEmail = getValue("contactEmailInput");
-    contactPhone = getValue("contactPhoneInput");
-    contactFax = getValue("contactFaxInput");
-    chosenSubdomain = getValue("chosenSubdomainInput");
-    registerReason = getValue("registerReasonInput");
-    configInfo = getValue("configInfoInput");
-    contactSecurely = isSecureContactTrue();
-    pgpPublicKey = getValue("pgpPublicKeyInput");
-}
+    Object.keys(inputs).forEach(key => {
+        inputs[key] = getValue(inputs[key]);
+    });
+    // inputs.contactSecurely = isSecureContactTrue(); // Commented out
+};
 
-const removePhoneChars = () => {
-    let string = contactPhone;
-    let clean = string.replace(/[/.\s-]/gi, "");
-    let result = clean.replace(/[\+]/gi, "00");
-    contactPhone = result;
-}
+const removeChars = (str) => str.replace(/[./\s-]/g, "").replace(/\+/g, "00");
 
-const removeFaxChars = () => {
-    let string = contactFax;
-    let clean = string.replace(/[/.\s-]/gi, "");
-    let result = clean.replace(/[\+]/gi, "00");
-    contactFax = result;
-}
+const removePhoneChars = () => inputs.contactPhone = removeChars(inputs.contactPhone);
+
+const removeFaxChars = () => inputs.contactFax = removeChars(inputs.contactFax);
 
 const verifyInputs = () => {
-    isFormValid = true;
     getValues();
     removePhoneChars();
     removeFaxChars();
-    if (fullName == "" || orgName == "" || postStreet == "" || postZip == "" || postCity == "" || contactEmail == "" || contactPhone == "" || chosenSubdomain == "" || registerReason == "" || configInfo == "") {
-        isFormValid = false;
-    }
-    console.log("FORM SUBMITTED\n\n"+fullName+"\n"+orgName+"\n"+postStreet+"\n"+postZip+"\n"+postCity+"\n"+postCountry+"\n"+contactEmail+"\n"+contactPhone+"\n"+contactFax+"\n"+chosenSubdomain+"\n"+registerReason+"\n"+configInfo+"\n"+contactSecurely+"\n"+pgpPublicKey+"\n");
+    const requiredInputs = ["fullName", "orgName", "postStreet", "postZip", "postCity", "contactEmail", "contactPhone", "chosenSubdomain", "registerReason", "configInfo"];
+    return requiredInputs.every(key => inputs[key]);
 };
 
-$(submitButton).on("click", (e) => {
+inputs.submitButton.on("click", (e) => {
     e.preventDefault();
-    verifyInputs();
-    console.log(isFormValid);
-    if (isFormValid) {
-        var formData = {};
-        formData.fullname = fullName;
-        formData.organzationName = orgName;
-        formData.street = postStreet;
-        formData.zipcode = postZip;
-        formData.city = postCity;
-        formData.country = postCountry;
-        formData.contactemail = contactEmail;
-        formData.contactphone = contactPhone;
-        if (contactFax != "") {
-            formData.contactfax = contactFax;
-        } else {
-            formData.contactfax = "undefined";
-        }
-        formData.subdomain = chosenSubdomain;
-        formData.reason = registerReason;
-        formData.configinfo = configInfo;
+    if (verifyInputs()) {
+        const formData = {
+            fullName: inputs.fullName,
+            orgName: inputs.orgName,
+            street: inputs.postStreet,
+            zipcode: inputs.postZip,
+            city: inputs.postCity,
+            country: inputs.postCountry,
+            contactEmail: inputs.contactEmail,
+            contactPhone: inputs.contactPhone,
+            contactFax: inputs.contactFax || "undefined",
+            subdomain: inputs.chosenSubdomain,
+            reason: inputs.registerReason,
+            configInfo: inputs.configInfo,
+        };
+        console.log("FORM SUBMITTED\n", formData);
+
+        $.ajax({
+            url: "/mail.php",
+            method: "POST",
+            data: formData,
+            success: function(response) {
+                console.log("Email sent successfully.");
+                // Handle success response here
+                $("#registeringform").replaceWith("<p>Form submitted successfully!</p>");
+            },
+            error: function(xhr, status, error) {
+                console.log("Failed to send email.");
+                // Handle error response here
+                $("#registeringform").replaceWith("<p>Failed to submit form. Please try again later.</p>");
+            }
+        });
+    } else {
+        console.log("Form is not valid.");
     }
 });
-
