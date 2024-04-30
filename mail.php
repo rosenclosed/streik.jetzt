@@ -23,7 +23,7 @@ $configInfo = $_POST['configInfo'];
 
 
 // Compose the email
-$to = '';
+$to = 'registrierung@streik.jetzt';
 $subject = 'New Contact Form Submission';
 $body = "Full Name: $fullName\nOrganization Name: $orgName\nStreet: $street\nZipcode: $zipcode\nCity: $city\nCountry: $country\nContact Email: $contactEmail\nContact Phone: $contactPhone\nContact Fax: $contactFax\nSubdomain: $subdomain\nReason: $reason\nConfig Info: $configInfo";
 
@@ -51,6 +51,7 @@ try {
     $mail->addAddress($to);
     $mail->Subject = $subject;
     $mail->Body = $body;
+    $mail->addReplyTo($contactEmail, $fullName);
 
     // Send the email
     if ($mail->send()) {
