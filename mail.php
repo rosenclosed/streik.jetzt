@@ -31,6 +31,7 @@ $smtpHost = '';
 $smtpPort = 465;
 $smtpUsername = '';
 $smtpPassword = '';
+
 try {
     // Create a new PHPMailer instance
     $mail = new PHPMailer;
