@@ -20,27 +20,27 @@
         <form id="registeringform" action="/" method="post">
             <div class="formgroup" id="fullnamegroup">
                 <label for="fullname">Vor- & Zuname:</label>
-                <input type="text" name="fullname" id="fullname" required>
+                <input type="text" pattern="[a-zA-Z0-9\s\-äöüÄÖÜßẞ]+" name="fullname" id="fullname" required>
             </div>
 
             <div class="formgroup" id="orgnamegroup">
                 <label for="orgname">Firma/Organisation:</label>
-                <input type="text" name="orgname" id="orgname" required>
+                <input type="text" pattern="[a-zA-Z0-9\s\-äöüÄÖÜßẞ]+" name="orgname" id="orgname" required>
             </div>
 
             <div class="formgroup" id="poststreetgroup">
                 <label for="poststreet">Straße:</label>
-                <input type="text" name="poststreet" id="poststreet" required>
+                <input type="text" pattern="[a-zA-Z0-9\s\-äöüÄÖÜßẞ]+" name="poststreet" id="poststreet" required>
             </div>
 
             <div class="formgroup" id="postzipcodegroup">
                 <label for="postzipcode">Postleitzahl:</label>
-                <input type="text" name="postzipcode" id="postzipcode" required>
+                <input type="text" pattern="[a-zA-Z0-9\s\-äöüÄÖÜßẞ]+" inputmode="numeric" name="postzipcode" id="postzipcode" required>
             </div>
 
             <div class="formgroup" id="postcitygroup">
                 <label for="postcity">Stadt:</label>
-                <input type="text" name="postcity" id="postcity" required>
+                <input type="text" pattern="[a-zA-Z0-9\s\-äöüÄÖÜßẞ]+" name="postcity" id="postcity" required>
             </div>
 
             <div class="formgroup" id="postcountrygroup">
@@ -57,22 +57,22 @@
 
             <div class="formgroup" id="contactemailgroup">
                 <label for="contactemail">E-Mail:</label>
-                <input type="email" name="contactemail" id="contactemail" required>
+                <input type="email" inputmode="email" name="contactemail" id="contactemail" required>
             </div>
 
             <div class="formgroup" id="contactphonegroup">
                 <label for="contactphone">Telefon:</label>
-                <input type="tel" name="contactphone" id="contactphone" required>
+                <input type="tel" inputmode="tel" name="contactphone" id="contactphone" required>
             </div>
 
             <div class="formgroup" id="contactfaxgroup">
                 <label for="contactfax">Fax:</label>
-                <input type="tel" name="contactfax" id="contactfax">
+                <input type="tel" inputmode="tel" name="contactfax" id="contactfax">
             </div>
 
             <div class="formgroup" id="chosensubdomaingroup">
                 <label for="chosensubdomain">Gewünschte Subdomain:</label>
-                <input type="text" name="chosensubdomain" id="chosensubdomain" required>
+                <input type="text" pattern="[a-zA-Z0-9\-]+" name="chosensubdomain" id="chosensubdomain" required>
             </div>
 
             <div class="formgroup" id="registeringreasongroup">
