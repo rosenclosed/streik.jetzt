@@ -108,6 +108,10 @@ button[type=submit] {
   border-width: 0px;
 }
 
+textarea {
+  resize: vertical;
+}
+
 input[type=radio] {
   cursor: pointer;
 }
