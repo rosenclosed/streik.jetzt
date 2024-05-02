@@ -37,29 +37,50 @@ const groups = {
     submitButton: $("#formbuttongroup"),
 };
 
-const getValue = (element) => $(element).val();
+let inputValues = {};
 
-// const isSecureContactTrue = () => inputs.contactSecurelyTrue.is(":checked") && !inputs.contactSecurelyFalse.is(":checked"); // Commented out
+const getValue = (element) => {
+    const value = $(element).val();
+    console.log("Value of input:", value);
+    return value;
+};
+
 
 const getValues = () => {
     Object.keys(inputs).forEach(key => {
-        inputs[key] = getValue(inputs[key]);
+        console.log(`Type of inputs[${key}]:`, typeof inputs[key]);
+        const value = inputs[key].val();
+        console.log(`Value of ${key}:`, value);
+        inputValues[key] = value;
     });
-    // inputs.contactSecurely = isSecureContactTrue(); // Commented out
 };
 
 const removeChars = (str) => str.replace(/[./\s-]/g, "").replace(/\+/g, "00");
 
-const removePhoneChars = () => inputs.contactPhone = removeChars(inputs.contactPhone);
+const removePhoneChars = () => inputValues.contactPhone = removeChars(inputValues.contactPhone);
 
-const removeFaxChars = () => inputs.contactFax = removeChars(inputs.contactFax);
+const removeFaxChars = () => inputValues.contactFax = removeChars(inputValues.contactFax);
+
+const isValidEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+};
 
 const verifyInputs = () => {
     getValues();
     removePhoneChars();
     removeFaxChars();
     const requiredInputs = ["fullName", "orgName", "postStreet", "postZip", "postCity", "contactEmail", "contactPhone", "chosenSubdomain", "registerReason", "configInfo"];
-    return requiredInputs.every(key => inputs[key]);
+    const areAllInputsValid = requiredInputs.every(key => inputValues[key]);
+
+    console.log("All Inputs Valid:", areAllInputsValid);
+
+    // Additional check for email validity
+    const isEmailValid = isValidEmail(inputValues.contactEmail);
+
+    console.log("Email Validity:", isEmailValid);
+
+    return areAllInputsValid && isEmailValid;
 };
 
 // Function to show loading overlay
@@ -72,27 +93,22 @@ const hideLoadingOverlay = () => {
     $("#loadingOverlay").remove();
 };
 
-// Attach click event to the submit button
-inputs.submitButton.on("click", (e) => {
-    e.preventDefault();
-
-    // Show loading overlay
-    showLoadingOverlay();
-
+// Function to verify inputs and handle form submission
+const handleFormSubmission = () => {
     if (verifyInputs()) {
         const formData = {
-            fullName: inputs.fullName,
-            orgName: inputs.orgName,
-            street: inputs.postStreet,
-            zipcode: inputs.postZip,
-            city: inputs.postCity,
-            country: inputs.postCountry,
-            contactEmail: inputs.contactEmail,
-            contactPhone: inputs.contactPhone,
-            contactFax: inputs.contactFax || "undefined",
-            subdomain: inputs.chosenSubdomain,
-            reason: inputs.registerReason,
-            configInfo: inputs.configInfo,
+            fullName: inputValues.fullName,
+            orgName: inputValues.orgName,
+            street: inputValues.postStreet,
+            zipcode: inputValues.postZip,
+            city: inputValues.postCity,
+            country: inputValues.postCountry,
+            contactEmail: inputValues.contactEmail,
+            contactPhone: inputValues.contactPhone,
+            contactFax: inputValues.contactFax || "undefined",
+            subdomain: inputValues.chosenSubdomain,
+            reason: inputValues.registerReason,
+            configInfo: inputValues.configInfo,
         };
 
         console.log("FORM SUBMITTED\n", formData);
@@ -102,14 +118,14 @@ inputs.submitButton.on("click", (e) => {
             url: "/mail.php",
             method: "POST",
             data: formData,
-            success: function(response) {
+            success: function (response) {
                 console.log("Email sent successfully.");
                 // Hide loading overlay on success
                 hideLoadingOverlay();
                 // Handle success response here
                 $("#registeringform").replaceWith("<p>Form submitted successfully!</p>");
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.log("Failed to send email.");
                 // Hide loading overlay on error
                 hideLoadingOverlay();
@@ -122,4 +138,15 @@ inputs.submitButton.on("click", (e) => {
         // Hide loading overlay if form is not valid
         hideLoadingOverlay();
     }
+};
+
+// Attach click event to the submit button
+inputs.submitButton.on("click", (e) => {
+    e.preventDefault();
+
+    // Show loading overlay
+    showLoadingOverlay();
+
+    // Call the function to verify inputs and handle form submission
+    handleFormSubmission();
 });
