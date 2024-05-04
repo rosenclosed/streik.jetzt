@@ -67,6 +67,7 @@ const verifyInputs = () => {
     getValues();
     removePhoneChars();
     removeFaxChars();
+    let isPostCountryValid = false;
     const requiredInputs = ["fullName", "orgName", "postStreet", "postZip", "postCity", "contactEmail", "contactPhone", "chosenSubdomain", "registerReason", "configInfo"];
     const areAllInputsValid = requiredInputs.every(key => inputValues[key]);
     // Additional check for email validity
@@ -88,7 +89,16 @@ const verifyInputs = () => {
         inputs.contactEmail.removeClass("invalid");
     }
     
-    return areAllInputsValid && isEmailValid;
+    // Add "invalid" class to postCountry field if value is null or "none"
+    if (!inputValues.postCountry || inputValues.postCountry === "none") {
+        inputs.postCountry.addClass("invalid");
+        isPostCountryValid = false;
+    } else {
+        inputs.postCountry.removeClass("invalid");
+        isPostCountryValid = true;
+    }
+    
+    return areAllInputsValid && isEmailValid && isPostCountryValid;
 };
 
 // Function to show loading overlay
