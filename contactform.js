@@ -71,6 +71,23 @@ const verifyInputs = () => {
     const areAllInputsValid = requiredInputs.every(key => inputValues[key]);
     // Additional check for email validity
     const isEmailValid = isValidEmail(inputValues.contactEmail);
+    
+    // Add "invalid" class to required inputs that are not filled
+    requiredInputs.forEach(key => {
+        if (!inputValues[key]) {
+            inputs[key].addClass("invalid");
+        } else {
+            inputs[key].removeClass("invalid");
+        }
+    });
+    
+    // Add "invalid" class to email field if email is not valid
+    if (!isEmailValid) {
+        inputs.contactEmail.addClass("invalid");
+    } else {
+        inputs.contactEmail.removeClass("invalid");
+    }
+    
     return areAllInputsValid && isEmailValid;
 };
 
