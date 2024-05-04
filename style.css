@@ -116,6 +116,14 @@ input[type=radio] {
   cursor: pointer;
 }
 
+input[type=text].invalid,
+input[type=tel].invalid,
+input[type=email].invalid,
+textarea.invalid,
+select.invalid {
+  outline: 3px solid red;
+}
+
 button[type=submit] {
   background-color: lightseagreen;
   color: black;

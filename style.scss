@@ -112,6 +112,16 @@ input[type=radio] {
     cursor: pointer;
 }
 
+input[type=text],
+input[type=tel],
+input[type=email],
+textarea,
+select {
+    &.invalid {
+        outline: 3px solid red;
+    }
+}
+
 button[type=submit] {
     background-color: lightseagreen;
     color: black;
