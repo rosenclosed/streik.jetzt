@@ -1,5 +1,32 @@
+*:focus {
+  outline: none;
+}
+*:focus-visible {
+  outline: 3px solid lightseagreen;
+}
+
+a {
+  color: turquoise;
+}
+a:visited {
+  color: lightseagreen;
+}
+
 html {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+body {
+  background-color: #343434;
+  color: #dedede;
+  margin-left: 5em;
+  margin-right: 5em;
+}
+@media screen and (max-width: 475px) {
+  body {
+    margin-left: 2.5em;
+    margin-right: 2.5em;
+  }
 }
 
 span.blockspam {
@@ -22,4 +49,89 @@ span.blockspam {
 .code {
   padding: 2.5px 2.5px;
   border-radius: 5px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  align-content: space-around;
+}
+@media screen and (min-width: 1100px) {
+  form {
+    height: 45em;
+  }
+}
+
+.formgroup {
+  margin-bottom: 1em;
+  display: inline-flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: stretch;
+  align-content: stretch;
+  align-self: auto;
+}
+@media screen and (min-width: 1100px) {
+  .formgroup {
+    width: 30%;
+  }
+}
+
+#contactviapgptruegroup,
+#contactviapgpfalsegroup {
+  margin-bottom: 1em;
+  display: inline-flex;
+  flex-direction: row-reverse;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  align-items: flex-start;
+  align-content: flex-end;
+  align-self: auto;
+}
+
+input[type=text],
+input[type=tel],
+input[type=email],
+textarea,
+select,
+button[type=submit] {
+  background-color: black;
+  color: white;
+  border-radius: 0.75rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-style: none;
+  border-width: 0px;
+}
+
+textarea {
+  resize: vertical;
+}
+
+input[type=radio] {
+  cursor: pointer;
+}
+
+input[type=text].invalid,
+input[type=tel].invalid,
+input[type=email].invalid,
+textarea.invalid,
+select.invalid {
+  outline: 3px solid red;
+}
+
+button[type=submit] {
+  background-color: lightseagreen;
+  color: black;
+  cursor: pointer;
+}
+button[type=submit]:active {
+  background-color: turquoise;
+}
+button[type=submit]:focus-visible {
+  outline: 3px solid turquoise;
 }/*# sourceMappingURL=style.css.map */
