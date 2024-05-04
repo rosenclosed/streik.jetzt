@@ -41,16 +41,13 @@ let inputValues = {};
 
 const getValue = (element) => {
     const value = $(element).val();
-    console.log("Value of input:", value);
     return value;
 };
 
 
 const getValues = () => {
     Object.keys(inputs).forEach(key => {
-        console.log(`Type of inputs[${key}]:`, typeof inputs[key]);
         const value = inputs[key].val();
-        console.log(`Value of ${key}:`, value);
         inputValues[key] = value;
     });
 };
@@ -72,14 +69,8 @@ const verifyInputs = () => {
     removeFaxChars();
     const requiredInputs = ["fullName", "orgName", "postStreet", "postZip", "postCity", "contactEmail", "contactPhone", "chosenSubdomain", "registerReason", "configInfo"];
     const areAllInputsValid = requiredInputs.every(key => inputValues[key]);
-
-    console.log("All Inputs Valid:", areAllInputsValid);
-
     // Additional check for email validity
     const isEmailValid = isValidEmail(inputValues.contactEmail);
-
-    console.log("Email Validity:", isEmailValid);
-
     return areAllInputsValid && isEmailValid;
 };
 
