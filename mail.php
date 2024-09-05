@@ -7,6 +7,10 @@ require 'phpmailer/Exception.php';
 require 'phpmailer/PHPMailer.php';
 require 'phpmailer/SMTP.php';
 
+if (!isset($_POST['fullName'])) {
+    exit;
+}
+
 // Extract the values from the POST data
 $fullName = $_POST['fullName'];
 $orgName = $_POST['orgName'];
