@@ -7,8 +7,17 @@ require 'phpmailer/Exception.php';
 require 'phpmailer/PHPMailer.php';
 require 'phpmailer/SMTP.php';
 
-if (!isset($_POST['fullName'])) {
-    exit;
+$requiredParams = [
+    'fullName', 'orgName', 'street', 'zipcode', 'city', 
+    'country', 'contactEmail', 'contactPhone', 'subdomain', 
+    'reason', 'configInfo'
+];
+
+foreach ($requiredParams as $param) {
+    if (empty($_POST[$param])) {
+        http_response_code(400); // Set HTTP 400 Bad Request
+        exit('Bad Request');
+    }
 }
 
 // Extract the values from the POST data
